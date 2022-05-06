@@ -4,7 +4,6 @@ public:
         stack<pair<char,int>> st;
         for(auto c:s){
             if(st.empty()){
-                // cout<<"stack is empty pushing "<<c<<" to it"<<"\n";
                 st.push({c,1});
             }
             else{
@@ -12,7 +11,6 @@ public:
                 char tc=top.first;
                 int ts=top.second;
                 if(tc==c){
-                    // cout<<"character matched "<<tc<<" "<<ts<<"\n";
                     st.pop();
                     int ns=ts+1;
                     if(ns!=k){
@@ -20,7 +18,6 @@ public:
                     }
                 }
                 else{
-                    // cout<<"character not matched "<<c<<"\n";
                     st.push({c,1});
                 }
             }
