@@ -7,7 +7,6 @@ public:
     }
     
     void bfs(vector<vector<char>>& b,int n,int m,int x,int y){
-        // cout<<"x "<<x<<" y "<<y<<"\n";
         queue<pair<int,int>> q;
         b[x][y]='Y';
         q.push({x,y});
@@ -28,7 +27,6 @@ public:
     
     void solve(vector<vector<char>>& board) {
         int n=board.size(),m=board[0].size();
-        // cout<<"n "<<n<<" m "<<m<<"\n";
         for(int i=0;i<m;i++){
             if(board[0][i]=='O'){
                 bfs(board,n,m,0,i);
