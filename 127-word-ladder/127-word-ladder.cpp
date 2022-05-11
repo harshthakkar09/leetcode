@@ -28,7 +28,6 @@ public:
                             return ans+1;
                         }
                         if(words.find(temp)!=words.end()){
-                            cout<<"going to push "<<temp<<"\n";
                             q.push(temp);
                             words.erase(temp);
                         }
