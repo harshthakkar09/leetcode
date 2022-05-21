@@ -2,7 +2,6 @@ class Solution {
 public:
     
     int rec(int amount,vector<int>& dp,vector<int>& coins,int n){
-        // cout<<"amount "<<amount<<"\n";
         if(amount==0){
             return 0;
         }
