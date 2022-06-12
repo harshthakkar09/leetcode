@@ -7,7 +7,6 @@ public:
             int earning=brackets[i][0];
             int percent=brackets[i][1];
             ans+=(min(earning,income)-pre)*((double)percent/100.0);
-            // cout<<"earning "<<earning<<" percent "<<percent<<"\n";
             pre=earning;
             if(earning>=income){
                 return ans;
