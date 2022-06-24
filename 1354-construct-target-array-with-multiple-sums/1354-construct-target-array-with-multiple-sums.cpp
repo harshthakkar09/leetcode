@@ -19,7 +19,7 @@ public:
             }
             pq.pop();    
             pq.push(old); 
-            sum += old;   
+            sum+=old;   
         }
         return true;
     }
