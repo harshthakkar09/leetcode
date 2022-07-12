@@ -9,6 +9,16 @@ public:
             if(sum[i] + sticks[ind] > target){
                 continue;
             }
+            int j = i - 1;
+            while(j >= 0){
+                if(sum[j] == sum[i]){
+                    break;
+                }
+                j--;
+            }
+            if(j != -1){
+                continue;
+            }
             sum[i] += sticks[ind];
             if(rec(ind + 1, sticks, sum, n, target)){
                 return true;
