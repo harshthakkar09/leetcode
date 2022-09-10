@@ -1,39 +1,33 @@
 class Solution {
 public:
-    
-    unordered_map<string,int> dp;
-    
-    int rec(vector<int>& prices,int ind,int buy,int ntx,int k){
+    int rec(vector<int>& prices, int n, int i, int purchased, int k, unordered_map<string, int>& dp){
         
-        string s=to_string(ind)+" "+to_string(buy)+" "+to_string(ntx);
-        
-        int len=prices.size();
-        if(ind>=len || ntx>=k){
+        if(k == 0 || i == n){
             return 0;
         }
-        if(dp.find(s)!=dp.end()){
-            return dp[s];
+        
+        string key = to_string(i)+" "+to_string(purchased)+" "+to_string(k);
+        
+        if(dp.find(key) != dp.end()){
+            return dp[key];
         }
         
-        if(buy==1){
-            return dp[s]=max(-prices[ind]+rec(prices,ind+1,0,ntx,k),rec(prices,ind+1,1,ntx,k));
+        int ans = INT_MIN;
+        if(purchased){
+            ans = max(ans, prices[i] + rec(prices, n, i + 1, 0, k - 1, dp));
+            ans = max(ans, rec(prices, n, i + 1, 1, k, dp));
         }
         else{
-            return dp[s]=max(+prices[ind]+rec(prices,ind+1,1,ntx+1,k),rec(prices,ind+1,0,ntx,k));
+            ans = max(ans, rec(prices, n, i + 1, 0, k, dp));
+            ans = max(ans, -prices[i] + rec(prices, n, i + 1, 1, k, dp));
         }
+        return dp[key] = ans;
     }
     
+    
     int maxProfit(int k, vector<int>& prices) {
-        
-        if(k>=prices.size()/2){
-            int pro=0;
-            for(int i=1;i<prices.size();i++){
-                if(prices[i]>prices[i-1]){
-                    pro+=(prices[i]-prices[i-1]);
-                }
-            }
-            return pro;
-        }
-        return rec(prices,0,1,0,k);
+        int n = prices.size();
+        unordered_map<string, int> dp;
+        return rec(prices, n, 0, 0, k, dp);
     }
 };
