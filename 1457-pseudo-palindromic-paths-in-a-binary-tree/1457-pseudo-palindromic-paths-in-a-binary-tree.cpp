@@ -11,27 +11,50 @@
  */
 class Solution {
 public:
-    int count = 0, path;
     
-    void dfs(TreeNode* root){
-        if(root == NULL){
+    int ans = 0;
+    
+    bool check(vector<int> fre){
+        int count = 0;
+        for(int i = 0; i <= 9; i++){
+            if((fre[i] % 2) == 1){
+                count++;
+                if(count > 1){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    void helper(TreeNode* root, vector<int>& fre){
+        if(root -> left == NULL && root -> right == NULL){
+            if(check(fre)){
+                ans++;
+            }
             return;
         }
         
-        path ^= (1 << root->val);
-    
-        if(root->left == NULL && root->right == NULL){
-            if((path & (path - 1)) == 0){
-                count++;
-            }
+        if(root -> left){
+            int leftVal = root -> left -> val;
+            fre[leftVal]++;
+            helper(root -> left, fre);
+            fre[leftVal]--;
         }
-        dfs(root->left);
-        dfs(root->right);
-        path ^= (1 << root->val);
+        
+        
+        if(root -> right){
+            int rightVal = root -> right -> val;
+            fre[rightVal]++;
+            helper(root -> right, fre);
+            fre[rightVal]--;
+        }
     }
     
     int pseudoPalindromicPaths (TreeNode* root) {
-        dfs(root);
-        return count;
+        vector<int> fre(10, 0);
+        fre[root -> val]++;
+        helper(root, fre);
+        return ans;
     }
 };
