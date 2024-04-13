@@ -2,43 +2,23 @@ class Solution {
 public:
     
     int solve(vector<int>& arr, int n){
-        vector<int> left(n);
-        vector<int> right(n);
         stack<int> st;
         int ans = 0;
-        for(int i = 0; i < n; i++){
-            while(!st.empty() && arr[st.top()] >= arr[i]){
+        for(int i = 0; i <= n; i++){
+            while(!st.empty() && (i == n || arr[i] <= arr[st.top()])){
+                int t = st.top(), height, width;
                 st.pop();
-            }
-            if(st.empty()){
-                left[i] = 0;
-            }
-            else{
-                left[i] = st.top() + 1;
+                height = arr[t];
+                if(st.empty()){
+                    width = i;
+                }
+                else{
+                    width = i - st.top() - 1;
+                }
+                ans = max(ans, width * height);
             }
             st.push(i);
-            // cout<<"i: "<<i<<" left[i] "<<left[i]<<"\n";
         }
-        while(!st.empty()){
-            st.pop();
-        }
-        for(int i = n - 1; i >= 0; i--){
-            while(!st.empty() && arr[st.top()] >= arr[i]){
-                st.pop();
-            }
-            if(st.empty()){
-                right[i] = n - 1;
-            }
-            else{
-                right[i] = st.top() - 1;
-            }
-            st.push(i);
-            // cout<<"i: "<<i<<" right[i] "<<right[i]<<"\n";
-        }
-        for(int i = 0; i < n; i++){
-            ans = max(ans, (right[i] - left[i] + 1) * arr[i]);
-        }
-        // cout<<"ans: "<<ans<<"\n";
         return ans;
     }
     
